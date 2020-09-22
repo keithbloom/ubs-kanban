@@ -1,0 +1,19 @@
+.App {
+  text-align: center;
+}
+
+.TaskStates {
+  display: flex;
+  flex-direction: row;
+}
+
+.TaskStateItem {
+  margin: 20px;
+  padding: 15px;
+  border: 1px solid gray;
+}
+
+.TaskCard {
+  padding: 20px;
+  border: 1px solid greenyellow;
+}
