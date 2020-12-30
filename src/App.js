@@ -8,7 +8,7 @@ const TaskCard = ({taskName}) => (
 const TaskList = ({ showState, tasks}) => (
   <div className="TaskStateItem">
     <h2>{showState}</h2>
-    {tasks.filter(({state}) => state === showState).map(({taskName}) => <TaskCard key={taskName} taskName={taskName} />)}
+    {tasks && tasks.filter(({state}) => state === showState).map(({taskName}) => <TaskCard key={taskName} taskName={taskName} />)}
   </div>
 
 )
@@ -27,20 +27,27 @@ const AddTask = ({onAdd}) => {
 
 class App extends Component {
 
-  backlog = [{state: 'ready', taskName: 'task1'}, {state: 'in-progress', taskName: 'task2'}]
+  constructor(props) {
+    super(props);
+    this.state = {tasks: [{state: 'ready', taskName: 'task1'}, {state: 'in-progress', taskName: 'task2'}]};
+  }
+
+  onAdd = (taskName) => {
+    this.setState(({tasks}) => ({tasks: [{state: 'ready', taskName}, ...tasks]}))
+  }
 
   render() {
     return (
       <div className="Board">
         <div className="BoardHeader">
-          <AddTask onAdd={() => {}} />
+          <AddTask onAdd={() => this.onAdd} />
           <div>My Kanban Board</div>
         </div>
         <div className='TaskStates'>
-          <TaskList showState='ready' tasks={this.backlog} />
-          <TaskList showState='in-progress' tasks={this.backlog} />
-          <TaskList showState='testing' tasks={this.backlog} />
-          <TaskList showState='done' tasks={this.backlog} />
+          <TaskList showState='ready' tasks={this.state.tasks} />
+          <TaskList showState='in-progress' tasks={this.state.tasks} />
+          <TaskList showState='testing' tasks={this.state.tasks} />
+          <TaskList showState='done' tasks={this.state.tasks} />
         </div>
         
       </div>
